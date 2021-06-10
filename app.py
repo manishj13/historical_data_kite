@@ -129,4 +129,5 @@ if st.button("Download Data"):
         df = transform(df)
         #df.to_csv(i + '.csv')
         st.write("Downloaded data for " + i)
-        st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+        print(df)
+        #st.markdown(get_table_download_link(df), unsafe_allow_html=True)
