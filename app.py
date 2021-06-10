@@ -26,9 +26,6 @@ stocks = data['tradingsymbol'].to_list()
 
 st.title("Historical Data -  Kite")
 
-st.header("How to use this tool?")
-st.video('https://www.youtube.com/watch?v=9ByI9WeXp9g') 
-
 user_id = st.text_input('Enter your Kite ID:')
 st.write("[Searching for enctoken - learn how to find your enctoken](https://drive.google.com/file/d/1Dsk-l70O9vP8q3iatLuokqCdUvOBMnDh/view?usp=sharing)")
 token = st.text_input('Enter enctoken:')
@@ -250,3 +247,6 @@ if st.button("Generate download link"):
         #df.to_csv(i + '.csv')
         #st.write("Downloaded data for " + i)
         #st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+
+st.header("How to use this tool?")
+st.video('https://www.youtube.com/watch?v=9ByI9WeXp9g') 
