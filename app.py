@@ -27,7 +27,7 @@ stocks = data['tradingsymbol'].to_list()
 st.title("Historical Data -  Kite")
 
 user_id = st.text_input('Enter your Kite ID:')
-st.write("[Searching for enctoken - click here to find it](https://drive.google.com/file/d/1Dsk-l70O9vP8q3iatLuokqCdUvOBMnDh/view?usp=sharing)")
+st.write("[Searching for enctoken - learn how to find your enctoken](https://drive.google.com/file/d/1Dsk-l70O9vP8q3iatLuokqCdUvOBMnDh/view?usp=sharing)")
 token = st.text_input('Enter enctoken:')
 
 #timeframe = st.selectbox('Enter the timeframe', ["minute","3minute","5minute","10minute","15minute","30minute","60minute"])
