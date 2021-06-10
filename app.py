@@ -87,7 +87,7 @@ def scrap_data(scrip_name):
         a = get_data('minute',start_date,end_date,scrip_name)['data']['candles']
 
         data = pd.DataFrame(a,columns = ['DateTime','Open','High','Low','Close','Volume','OI'])
-        data.drop(columns=['OI'],inplace = True)
+        #data.drop(columns=['OI'],inplace = True)
 
         df = df.append(data)
 
