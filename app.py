@@ -126,6 +126,6 @@ if st.button("Download Data"):
         df = scrap_data(str(i))
         df.insert(0,'Ticker',i)
         df = transform(df)
-        df.to_csv('data/' + i + '.csv')
+        df.to_csv(i + '.csv')
         st.write("Downloaded data for " + i)
         #st.markdown(get_table_download_link(df), unsafe_allow_html=True)
