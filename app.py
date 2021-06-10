@@ -236,8 +236,8 @@ def download_button(object_to_download, download_filename, button_text, pickle_i
 #For a list of tickers
 
 if st.button("Generate download link"):
-    st.text("Wait for sometime until your download link is generated!")
     for i in ticker:
+        st.text("Wait for sometime until your download link for " + i + " is generated!")
         df = scrap_data(str(i))
         df.insert(0,'Ticker',i)
         df = transform(df)
