@@ -33,6 +33,7 @@ token = st.text_input('Enter enctoken:')
 #timeframe = st.selectbox('Enter the timeframe', ["minute","3minute","5minute","10minute","15minute","30minute","60minute"])
 ticker = st.multiselect('Enter the TickerSymbol',stocks)
 
+st.video('https://www.youtube.com/watch?v=9ByI9WeXp9g') 
 
 #Function to get last 60 days of data
 def get_data(period, start_date,end_date,symbol):
