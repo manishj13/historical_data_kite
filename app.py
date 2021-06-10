@@ -26,6 +26,9 @@ stocks = data['tradingsymbol'].to_list()
 
 st.title("Historical Data -  Kite")
 
+st.header("How to use this tool?")
+st.video('https://www.youtube.com/watch?v=9ByI9WeXp9g') 
+
 user_id = st.text_input('Enter your Kite ID:')
 st.write("[Searching for enctoken - learn how to find your enctoken](https://drive.google.com/file/d/1Dsk-l70O9vP8q3iatLuokqCdUvOBMnDh/view?usp=sharing)")
 token = st.text_input('Enter enctoken:')
@@ -33,7 +36,7 @@ token = st.text_input('Enter enctoken:')
 #timeframe = st.selectbox('Enter the timeframe', ["minute","3minute","5minute","10minute","15minute","30minute","60minute"])
 ticker = st.multiselect('Enter the TickerSymbol',stocks)
 
-st.video('https://www.youtube.com/watch?v=9ByI9WeXp9g') 
+
 
 #Function to get last 60 days of data
 def get_data(period, start_date,end_date,symbol):
