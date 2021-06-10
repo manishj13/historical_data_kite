@@ -3,7 +3,8 @@ import requests
 import datetime as dt
 import pandas as pd
 import streamlit as st
-
+import base64
+from io import BytesIO
 
 #Get input from user
 global user_id,token,timeframe, ticker
