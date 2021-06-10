@@ -110,14 +110,14 @@ def transform(df):
 #Create list of stocks/index/option/future symbol that you want the data for
 #stocks = ['INDIA VIX','SBIN']
 
-# def get_table_download_link(df):
-#     """Generates a link allowing the data in a given panda dataframe to be downloaded
-#     in:  dataframe
-#     out: href string
-#     """
-#     csv = df.to_csv(index=False)
-#     b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-#     return f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
+def get_table_download_link(df):
+    """Generates a link allowing the data in a given panda dataframe to be downloaded
+    in:  dataframe
+    out: href string
+    """
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+    return f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
 
 #For a list of tickers
 
@@ -126,6 +126,6 @@ if st.button("Download Data"):
         df = scrap_data(str(i))
         df.insert(0,'Ticker',i)
         df = transform(df)
-        df.to_csv(i + '.csv')
+        #df.to_csv(i + '.csv')
         st.write("Downloaded data for " + i)
-        #st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+        st.markdown(get_table_download_link(df), unsafe_allow_html=True)
