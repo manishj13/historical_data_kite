@@ -235,12 +235,13 @@ def download_button(object_to_download, download_filename, button_text, pickle_i
 
 #For a list of tickers
 
-if st.button("Download Data"):
+if st.button("Generate download link"):
+    st.text("Wait for sometime until your download link is generated!")
     for i in ticker:
         df = scrap_data(str(i))
         df.insert(0,'Ticker',i)
         df = transform(df)
-        tmp_download_link = download_button(df, f'{i}.csv', button_text='Click here to download data for ' + i)
+        tmp_download_link = download_button(df, f'{i}.csv', button_text='download data for ' + i)
         st.markdown(tmp_download_link, unsafe_allow_html=True)
         #df.to_csv(i + '.csv')
         #st.write("Downloaded data for " + i)
