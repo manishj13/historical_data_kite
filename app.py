@@ -249,4 +249,4 @@ if st.button("Generate download link"):
         #st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 st.header("How to use this tool?")
-#st.video('https://youtu.be/TFQEKQCYz_w') 
+st.video('https://youtu.be/TFQEKQCYz_w') 
