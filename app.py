@@ -177,9 +177,9 @@ def download_button(object_to_download, download_filename, button_text, pickle_i
     button_id = re.sub('\d+', '', button_uuid)
 
     prim_color = st.config.get_option('theme.primaryColor') or '#F43365'
-    bg_color = st.config.get_option('theme.backgroundColor') or '#000000'
+    bg_color = st.config.get_option('theme.backgroundColor') or '#808080'
     sbg_color = st.config.get_option('theme.secondaryBackgroundColor') or '#f1f3f6'
-    txt_color = st.config.get_option('theme.textColor') or '#000000' 
+    txt_color = st.config.get_option('theme.textColor') or '#00FF00' 
     font = st.config.get_option('theme.font') or 'sans serif'  
 
 
@@ -238,7 +238,7 @@ if st.button("Download Data"):
         df = scrap_data(str(i))
         df.insert(0,'Ticker',i)
         df = transform(df)
-        tmp_download_link = download_button(df, f'{i}.csv', button_text='Click here to download your text!')
+        tmp_download_link = download_button(df, f'{i}.csv', button_text='Click here to download data for' + i)
         st.markdown(tmp_download_link, unsafe_allow_html=True)
         #df.to_csv(i + '.csv')
         st.write("Downloaded data for " + i)
