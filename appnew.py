@@ -8,7 +8,7 @@ import json
 import pickle
 import uuid
 import re
-import pathlib
+import streamlit_analytics
 
 
 #Get input from user
@@ -19,20 +19,28 @@ global user_id,token,timeframe, ticker
 # timeframe = "minute"
 
 #vlookup for instrument token
-instruments = pd.read_csv("https://api.kite.trade/instruments/NSE")
+
+
+
+
+st.title("Stock Market Historical Data Downloader")
+
+user_id = st.text_input('Enter your Zerodha Kite ID:')
+token = st.text_input('Enter enctoken:')
+segment = ['NSE','NFO']
+segment = st.selectbox('Select Segment',segment)
+
+try:
+    instruments = pd.read_csv("https://api.kite.trade/instruments/"+segment)
+except:
+    st.warning("Please Reload the page!")
+    st.stop()
+
 data = instruments[['instrument_token','tradingsymbol']]
 inst = data.set_index('tradingsymbol')
 stocks = data['tradingsymbol'].to_list()
 
-
-st.title("Kite Historical Data Downloader")
-
-user_id = st.text_input('Enter your Kite ID:')
-#st.write("[Searching for enctoken - learn how to find your enctoken](https://drive.google.com/file/d/1Dsk-l70O9vP8q3iatLuokqCdUvOBMnDh/view?usp=sharing)")
-token = st.text_input('Enter enctoken:')
-
-#timeframe = st.selectbox('Enter the timeframe', ["minute","3minute","5minute","10minute","15minute","30minute","60minute"])
-ticker = st.multiselect('Enter the TickerSymbol',stocks)
+ticker = st.selectbox('Select the TickerSymbol',stocks)
 
 
 
@@ -89,7 +97,7 @@ def scrap_data(scrip_name):
         a = get_data('minute',start_date,end_date,scrip_name)['data']['candles']
 
         data = pd.DataFrame(a,columns = ['DateTime','Open','High','Low','Close','Volume','OI'])
-        #data.drop(columns=['OI'],inplace = True)
+        data.drop(columns=['OI'],inplace = True)
 
         df = df.append(data)
 
@@ -183,7 +191,7 @@ def download_button(object_to_download, download_filename, button_text, pickle_i
     prim_color = st.config.get_option('theme.primaryColor') or '#F43365'
     bg_color = st.config.get_option('theme.backgroundColor') or '#808080'
     sbg_color = st.config.get_option('theme.secondaryBackgroundColor') or '#f1f3f6'
-    txt_color = st.config.get_option('theme.textColor') or '#00FF00' 
+    txt_color = st.config.get_option('theme.textColor') or '#90EE90'		
     font = st.config.get_option('theme.font') or 'sans serif'  
 
 
@@ -251,23 +259,24 @@ def download_button(object_to_download, download_filename, button_text, pickle_i
 #     df.to_csv(str(DOWNLOADS_PATH / "mydata.csv"), index=False)
 
 
-
+streamlit_analytics.start_tracking()
 if st.button("Generate download link"):
-    for i in ticker:
-        st.text("Wait for sometime until your download link for " + i + " is generated!")
-        df = scrap_data(str(i))
-        df.insert(0,'Ticker',i)
-        df = transform(df)
-        #main(df,i)
-        tmp_download_link = download_button(df, f'{i}.csv', button_text='download data for ' + i)
-        st.markdown(tmp_download_link, unsafe_allow_html=True)
-        df.to_csv(i + '.csv')
-        st.write("Downloaded data for " + i)
-        st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
+    with st.spinner('Generating Download Link...'):
+        df = scrap_data(ticker)
+        #df.insert(0,'Ticker',ticker)
+        df = transform(df)
+        tmp_download_link = download_button(df, f'{ticker}.csv', button_text='Download Data for ' + ticker)
+        #tmp_download_link = download_button(df, f'{i}.txt', button_text='download data for ' + i)
+        #df.to_csv(i + ".txt", header=None, index=None, sep=',', mode='w')
+        df.to_csv(ticker + '.csv')
+    st.success("Download Link Generated!")
+    st.markdown(tmp_download_link, unsafe_allow_html=True)
+    st.balloons()
+    
 
 st.header("How to use this tool?")
 st.video('https://youtu.be/TFQEKQCYz_w') 
 
-
+streamlit_analytics.stop_tracking()
 
