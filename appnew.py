@@ -26,7 +26,7 @@ global user_id,token,timeframe, ticker
 st.title("Stock Market Historical Data Downloader")
 
 user_id = st.text_input('Enter your Zerodha Kite ID:')
-token = st.text_input('Enter enctoken:')
+token = st.text_input('Enter enctoken (watch video below to learn how to get your enctoken):')
 segment = ['NSE','NFO']
 segment = st.selectbox('Select Segment',segment)
 
