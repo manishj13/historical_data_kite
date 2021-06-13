@@ -14,15 +14,6 @@ import streamlit_analytics
 #Get input from user
 global user_id,token,timeframe, ticker
 
-# user_id = "VT5229"
-# token = "sP0cU2koF6AntNHSuFXXUfXZXku+iwzc9IuVtLsXDXarCdEHHk9P0s9piz7q+tyLMCrH4yWvzPrqhHeeEwIKrgg88/N6Og=="
-# timeframe = "minute"
-
-#vlookup for instrument token
-
-
-
-
 st.title("Stock Market Historical Data Downloader")
 
 user_id = st.text_input('Enter your Zerodha Kite ID:')
@@ -30,6 +21,7 @@ token = st.text_input('Enter enctoken (watch video below to learn how to get you
 segment = ['NSE','NFO']
 segment = st.selectbox('Select Segment',segment)
 
+#vlookup for instrument token
 try:
     instruments = pd.read_csv("https://api.kite.trade/instruments/"+segment)
 except:
@@ -46,13 +38,11 @@ ticker = st.selectbox('Select the TickerSymbol',stocks)
 
 #Function to get last 60 days of data
 def get_data(period, start_date,end_date,symbol):
-    #scrip_ID = mapping.get(symbol)
-    #user_id = 'VT5229'
+
     scrip_ID = inst.loc[symbol]['instrument_token']
     url = f"https://kite.zerodha.com/oms/instruments/historical/{scrip_ID}/{period}?user_id={user_id}&oi=1&from={start_date}&to={end_date}"
     
-    #enctoken changes everytime you logoff
-    #token = "sP0cU2koF6AntNHSuFXXUfXZXku+iwzc9IuVtLsXDXarCdEHHk9P0s9piz7q+tyLMCrH4yWvzPrqhHeeEwIKrgg88/N6Og=="
+
     
     payload={}
     headers = {
@@ -121,11 +111,6 @@ def transform(df):
     df.drop(['DateTime','nan'],axis = 1,inplace = True)
     
     return df
-
-
-
-#Create list of stocks/index/option/future symbol that you want the data for
-#stocks = ['INDIA VIX','SBIN']
 
 def get_table_download_link(df):
     """Generates a link allowing the data in a given panda dataframe to be downloaded
@@ -241,22 +226,6 @@ def download_button(object_to_download, download_filename, button_text, pickle_i
                            f'href="data:file/txt;base64,{b64}">{button_text}</a><br></br>'
     
     return dl_link
-
-
-#For a list of tickers
-
-# # HACK This only works when we've installed streamlit with pipenv, so the
-# # permissions during install are the same as the running process
-# STREAMLIT_STATIC_PATH = pathlib.Path(st.__path__[0]) / 'static'
-# # We create a downloads directory within the streamlit static asset directory
-# # and we write output files to it
-# DOWNLOADS_PATH = (STREAMLIT_STATIC_PATH / "downloads")
-# if not DOWNLOADS_PATH.is_dir():
-#     DOWNLOADS_PATH.mkdir()
-
-# def main(df,i):
-#     st.markdown("[Download data for " + i +"](downloads/mydata.csv)")
-#     df.to_csv(str(DOWNLOADS_PATH / "mydata.csv"), index=False)
 
 
 streamlit_analytics.start_tracking()
